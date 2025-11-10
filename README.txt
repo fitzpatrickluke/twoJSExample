@@ -19,5 +19,5 @@ The project itself is some different Pikachu svg's moving across the screen. Jus
 I did find that whenever a new object starts moving across there is a small second where its at position 0, 0.
 I think this is due to me not fully understanding two.js yet.
 
-There's a lot of potential with what you can do with SVG's. I may experiment more in the future, I feel like I really only cracked the surface of what's possible.
+I may experiment more in the future, I feel like I really only cracked the surface of what's possible.
 
