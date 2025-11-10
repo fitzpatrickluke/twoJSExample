@@ -1,5 +1,5 @@
 export default class drawObject {
-    constructor(img1, img2, img3, col1, col2, col3, x_max, y_max) {
+    constructor(img1, img2, img3, col1, col2, col3, x_max, y_max, sound) {
         this.img1 = img1;
         this.img2 = img2;
         this.img3 = img3;
@@ -17,7 +17,7 @@ export default class drawObject {
         this.x_int_3 = 1/this.y_max*8000;
         this.y_int = 1/this.x_max*5000;
 
-        this.sound = new Audio('./sounds/pikachu.mp3');
+        this.sound = sound;
         this.soundPlayed = false;
 
         this.waitingToReturn = false;
@@ -37,11 +37,36 @@ export default class drawObject {
         }
     }
 
-    checkOffScreen(width) {
-        if(this.x1 > width + 400)
+
+    checkOffScreen(two) {
+        if(this.x_3 > two.width ) {
+            this.x_1 = -400;
+            this.x_2 = -400;
+            this.x_3 = -400;
+
+            this.soundPlayed = false;
+
+            this.waitingToReturn = false;
+            this.returning = false;
+            this.waitTimer = 0; 
+
+            this.scaleCount = 0;
+            this.scale_int = 0.001;
+
             return true;
+        }
         else
             return false;
+    }
+
+    setNewImage(img1, img2, img3, col1, col2, col3, sound) {
+        this.img1 = img1;
+        this.img2 = img2;
+        this.img3 = img3;
+        this.img1.fill = col1;
+        this.img2.fill = col2;
+        this.img3.fill = col3;
+        this.sound = sound;
     }
 
     update() {
@@ -87,6 +112,7 @@ export default class drawObject {
         this.img1.scale += this.scale_int;
         this.img2.scale += this.scale_int;
         this.img3.scale += this.scale_int;
+         this.img1.position.set(this.x_1+this.scale_int, this.y_max+this.scale_int);
         // wait around 1 seconds
         if (this.waitTimer >= 120) {
             this.waitingToReturn = false;
