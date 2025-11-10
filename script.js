@@ -1,21 +1,36 @@
 import Two from './node_modules/two.js/build/two.module.js';
-var params = {
+import drawObject from "./drawObject.js";
+
+var two = new Two({
+  type: Two.Types.svg,
   fullscreen: true
-};
-var elem = document.body;
-var two = new Two(params).appendTo(elem);
+}).appendTo(document.body);
 
-var circle = two.makeCircle(-70, 0, 50);
-var rect = two.makeRectangle(70, 0, 100, 100);
-circle.fill = '#FF8000';
-rect.fill = 'rgba(0, 200, 255, 0.75)';
 
-var cx = two.width * 0.5;
-var cy = two.height * 0.5;
-var group = two.makeGroup(circle, rect);
-group.position.set(cx, cy);
-group.scale = 0;
-group.noStroke();
+
+two.renderer.domElement.style.background = '#dddddd';
+
+
+var svg = await (await fetch('./svgs/pika_1-01.svg')).text().then(str => new DOMParser().parseFromString(str, 'image/svg+xml').querySelector('svg'));
+var img = two.interpret(svg);
+var svg2 = await (await fetch('./svgs/pika_2-01.svg')).text().then(str => new DOMParser().parseFromString(str, 'image/svg+xml').querySelector('svg'));
+var img2 = two.interpret(svg2);
+var svg3 = await (await fetch('./svgs/pika_3-01.svg')).text().then(str => new DOMParser().parseFromString(str, 'image/svg+xml').querySelector('svg'));
+var img3 = two.interpret(svg3);
+
+var x_max = two.width * 0.5;
+var y_max = two.height * 0.5;
+
+var pika1 = new drawObject(img, img2, img3, x_max, y_max);
+
+
+img3.subdivide();
+img.fill = '#ffff00';
+img2.fill = '#ff0000';
+img3.fill = '#000000';
+two.add(img);
+two.add(img2);
+two.add(img3);
 
 // Bind a function to scale and rotate the group to the animation loop.
 two.bind('update', update);
@@ -23,11 +38,6 @@ two.bind('update', update);
 two.play();
 
 function update(frameCount) {
-  // This code is called every time two.update() is called.
-  if (group.scale > 0.9999) {
-    group.scale = group.rotation = 0;
-  }
-  var t = (1 - group.scale) * 0.04;
-  group.scale += t;
-  group.rotation += t * 4 * Math.PI;
+  pika1.update();
 }
+
