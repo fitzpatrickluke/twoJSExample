@@ -21,13 +21,9 @@ var img3 = two.interpret(svg3);
 var x_max = two.width * 0.5;
 var y_max = two.height * 0.5;
 
-var pika1 = new drawObject(img, img2, img3, x_max, y_max);
+var pika1 = new drawObject(img, img2, img3, '#ffff00', '#ff0000', '#000000', x_max, y_max);
 
 
-img3.subdivide();
-img.fill = '#ffff00';
-img2.fill = '#ff0000';
-img3.fill = '#000000';
 two.add(img);
 two.add(img2);
 two.add(img3);
