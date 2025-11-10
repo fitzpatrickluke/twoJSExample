@@ -39,7 +39,7 @@ export default class drawObject {
 
 
     checkOffScreen(two) {
-        if(this.x_3 > two.width ) {
+        if(this.x_3 > two.width +400) {
             this.x_1 = -400;
             this.x_2 = -400;
             this.x_3 = -400;

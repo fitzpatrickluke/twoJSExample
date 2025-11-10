@@ -8,7 +8,8 @@ var two = new Two({
 
 
 
-two.renderer.domElement.style.background = '#dddddd';
+two.renderer.domElement.style.background = '#818181ff';
+two.renderer.domElement.style.transition = 'background-color 0.5s linear';
 
 
 var svg1_1 = await (await fetch('./svgs/pika_1-01.svg')).text().then(str => new DOMParser().parseFromString(str, 'image/svg+xml').querySelector('svg'));
@@ -37,6 +38,8 @@ const pikaSvgs = [[svg1_1, svg2_1, svg3_1], [svg1_2, svg2_2, svg3_2],
 const pikaCols = [['#f3d77b', '#e06d5d', '#131212'], ['#f9efb8', '#dca0a0', '#151515'],
 ['#ebb55b', '#f3d6a9', '#513a29'], ['#d8d0ad', '#c37629', '#252525']];
 
+const bgCols = ['#818181ff', '#6facbaff', '#767aafff', '#5f4b58ff']
+
 var sound1 = new Audio('./sounds/pikachu.mp3');
 var sound2 = new Audio('./sounds/pichu.mp3');
 var sound3 = new Audio('./sounds/raichu.mp3');
@@ -62,9 +65,11 @@ function update() {
   pika.update();
   if(pika.checkOffScreen(two)) {
     
+
     curr_img += 1;
     if(curr_img > 3)
       curr_img = 0;
+two.renderer.domElement.style.backgroundColor = bgCols[curr_img];
 
     var new_img1 = two.interpret(pikaSvgs[curr_img][0].cloneNode(true));
     var new_img2 = two.interpret(pikaSvgs[curr_img][1].cloneNode(true));
@@ -75,6 +80,8 @@ function update() {
     two.remove(this.img1);
     two.remove(this.img2);
     two.remove(this.img3);
+
+
   }
 }
 
